@@ -1,16 +1,64 @@
+import { useState } from "react";
+import { Link,useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import API from "../../../services/requests";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  function submitForm(event) {
+    event.preventDefault();
+    if (password !== confirmPassword)
+      return alert("A senha e a confirmação devem ser iguais");
+    const body = { name, email, password };
+    API.signUp({body})
+				.then(() => {
+					navigate("/sign-in");
+				})
+				.catch((error) => {
+          if(error.response.status === 409) return alert("O email inserido já está em uso");
+          return alert("Não foi possível realizar o cadastro");
+				});
+  }
+
   return (
     <StyledMain>
       <StyledTitle>Bem vindo ao GratiBox</StyledTitle>
-      <StyledForm>
-        <input type="text" placeholder="Nome" required />
-        <input type="text" placeholder="oi" required />
-        <input type="text" placeholder="Nome" required />
-        <input type="text" placeholder="Nome" required />
-        <StyledButton>Cadastrar</StyledButton>
+      <StyledForm onSubmit={submitForm}>
+        <input
+          type="text"
+          placeholder="Nome"
+          onChange={(event) => setName(event.target.value)}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          onChange={(event) => setEmail(event.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Senha"
+          onChange={(event) => setPassword(event.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Confirmar senha"
+          onChange={(event) => setConfirmPassword(event.target.value)}
+          required
+        />
+        <StyledButton type="submit">Cadastrar</StyledButton>
       </StyledForm>
+      <Link to="/login">
+        <StyledLink>Já sou grato</StyledLink>
+      </Link>
     </StyledMain>
   );
 }
@@ -34,7 +82,7 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap:8px;
+  gap: 8px;
   input {
     width: 325px;
     height: 64px;
@@ -59,6 +107,15 @@ const StyledButton = styled.button`
   border-radius: 10px;
   text-align: center;
   border: none;
-  margin-top:62px;
-  font-family: 'Roboto', sans-serif;
+  margin-top: 62px;
+  font-family: "Roboto", sans-serif;
+`;
+const StyledLink = styled.button`
+  margin-top: 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: none;
+  border: none;
+  font-family: "Roboto", sans-serif;
 `;
