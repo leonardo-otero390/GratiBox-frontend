@@ -59,11 +59,13 @@ const StyledTitle = styled.h1`
   font-size: 28px;
   color: #fff;
   margin-bottom:40px;
+  font-family: 'Roboto', sans-serif;
 `;
 const StyledDescription = styled.p`
   font-size: 18px;
   color: #fff;
   text-align: center;
+  font-family: 'Roboto', sans-serif;
 `;
 const StyledButton = styled.button`
   font-size: 18px;
@@ -76,6 +78,7 @@ const StyledButton = styled.button`
   text-align: center;
   border: none;
   margin-bottom:17px;
+  font-family: 'Roboto', sans-serif;
 `;
 const StyledLink = styled.button`
   font-size: 18px;
@@ -83,4 +86,5 @@ const StyledLink = styled.button`
   color: #fff;
   background: none;
   border: none;
+  font-family: 'Roboto', sans-serif;
 `;
