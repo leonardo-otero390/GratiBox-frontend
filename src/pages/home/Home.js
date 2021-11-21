@@ -19,7 +19,7 @@ export default function Home() {
         <Link to="/cadastro">
           <StyledButton>Quero começar</StyledButton>
         </Link>
-        <Link to="/login">
+        <Link to="/entrar">
           <StyledLink>Já sou grato</StyledLink>
         </Link>
       </div>
