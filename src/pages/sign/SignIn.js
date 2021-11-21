@@ -28,8 +28,7 @@ export default function SignIn() {
         setUserData(res.data.user);
       })
       .catch((err) => {
-        if (err.response.status === 401)
-          return alert("Campo email/senha inválido");
+        if (err.response?.status === 401) return alert("Campo email/senha inválido");
         return alert("Não foi possível entrar");
       });
   }

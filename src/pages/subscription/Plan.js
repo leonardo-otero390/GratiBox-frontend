@@ -9,12 +9,11 @@ export default function Plan() {
   const { userData, setSubscriptionData, subscriptionData } = useContext(GlobalContext);
   const navigate = useNavigate();
   useEffect(() => {
-    //if (!userData) navigate("/entrar");
+    if (!userData) navigate("/entrar");
   }, [userData]);
   function selectPlan(planId) {
     setSubscriptionData({ planId });
     navigate("/detalhes");
-    console.log(subscriptionData);
   }
   return (
     <StyledMain>

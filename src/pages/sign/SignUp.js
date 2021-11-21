@@ -27,7 +27,7 @@ export default function SignUp() {
 					navigate("/entrar");
 				})
 				.catch((error) => {
-          if(error.response.status === 409) return alert("O email inserido já está em uso");
+          if(error.response?.status === 409) return alert("O email inserido já está em uso");
           return alert("Não foi possível realizar o cadastro");
 				});
   }
