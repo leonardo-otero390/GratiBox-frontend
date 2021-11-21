@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import GlobalContext from "../../context/GlobalContext";
 import API from "../../services/requests";
 import {
   StyledButton,
@@ -7,7 +8,7 @@ import {
   StyledLink,
   StyledMain,
   StyledTitle,
-} from "./style.js"
+} from "./style.js";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -15,17 +16,22 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { setUserData } = useContext(GlobalContext);
+
   function submitForm(event) {
     event.preventDefault();
     const body = { email, password };
-    API.signIn({body})
-				.then(() => {
-					navigate("/planos");
-				})
-				.catch((error) => {
-          if(error.response.status === 401) return alert("Campo email/senha inválido");
-          return alert("Não foi possível entrar");
-				});
+    API.signIn({ body })
+      .then((res) => {
+        navigate("/planos");
+        localStorage.setItem('token', res.data.token);
+        setUserData(res.data.user);
+      })
+      .catch((err) => {
+        if (err.response.status === 401)
+          return alert("Campo email/senha inválido");
+        return alert("Não foi possível entrar");
+      });
   }
 
   return (
