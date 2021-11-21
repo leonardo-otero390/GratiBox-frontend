@@ -6,12 +6,16 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 export default function Plan() {
-  const { userData } = useContext(GlobalContext);
+  const { userData, setSubscriptionData, subscriptionData } = useContext(GlobalContext);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!userData) navigate("/entrar");
+    //if (!userData) navigate("/entrar");
   }, [userData]);
-
+  function selectPlan(planId) {
+    setSubscriptionData({ planId });
+    navigate("/detalhes");
+    console.log(subscriptionData);
+  }
   return (
     <StyledMain>
       <StyledTitle>Bom te ver por aqui, {userData?.name}</StyledTitle>
@@ -24,14 +28,12 @@ export default function Plan() {
           Você recebe um box por semana. Ideal para quem quer exercer a gratidão
           todos os dias.
         </p>
-      <StyledButton>Assinar</StyledButton>
+        <StyledButton onClick={()=>selectPlan(1)}>Assinar</StyledButton>
       </StyledCard>
       <StyledCard>
         <img src={womanInRoom} alt="woman meditating in garden" />
-        <p>
-        Você recebe um box por mês. Ideal para quem está começando agora
-        </p>
-      <StyledButton>Assinar</StyledButton>
+        <p>Você recebe um box por mês. Ideal para quem está começando agora</p>
+        <StyledButton onClick={()=>selectPlan(2)}>Assinar</StyledButton>
       </StyledCard>
     </StyledMain>
   );
@@ -80,7 +82,7 @@ const StyledButton = styled.button`
   font-size: 24px;
   font-weight: bold;
   color: #fff;
-  background: #8C97EA;
+  background: #8c97ea;
   width: 168px;
   height: 39px;
   border-radius: 10px;
