@@ -13,12 +13,11 @@ import SummaryBox from "./components/SummaryBox";
 
 export default function Details() {
   const [selectedBox, setSelectedBox] = useState(null);
-  const { userData, setSubscriptionData, subscriptionData } =
-    useContext(GlobalContext);
+  const { userData, subscriptionData } = useContext(GlobalContext);
   const navigate = useNavigate();
   useEffect(() => {
     if (!userData) navigate("/entrar");
-    if (!subscriptionData.planId) navigate("/planos");
+    if (!subscriptionData?.planId) navigate("/planos");
   }, [userData, subscriptionData]);
   function selectDetails() {
     navigate("/entrega");
@@ -35,8 +34,9 @@ export default function Details() {
       </StyledDescription>
       <StyledCard>
         <img src={womanInMat} alt="woman meditating in mat" />
-        {["Plano", "Entrega", "Quero receber"].map((boxName) => (
+        {["Plano", "Entrega", "Quero receber"].map((boxName, index) => (
           <SummaryBox
+            key={index}
             selectedBox={selectedBox}
             toggleSelectedBox={toggleSelectedBox}
             boxName={boxName}

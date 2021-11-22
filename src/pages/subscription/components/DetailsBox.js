@@ -6,18 +6,18 @@ export default function DetailsBox({ boxName, isOpen }) {
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const { subscriptionData, setSubscriptionData } = useContext(GlobalContext);
-
-  const planName = subscriptionData.planId === 1 ? "Semanal" : "Mensal";
+  const planId = subscriptionData?.planId;
+  const planName = planId === 1 ? "Semanal" : "Mensal";
   const daysOptions =
-    subscriptionData.planId === 1
+    planId === 1
       ? ["Segunda", "Quarta", "Sexta"]
       : ["Dia 01", "Dia 10", "Dia 20"];
   const productsOptions = ["Chás", "Incensos", "Produtos Orgânicos"];
   function selectDay(day) {
-    setSelectedDay(day * subscriptionData.planId);
+    setSelectedDay(day * planId);
     setSubscriptionData({
       ...subscriptionData,
-      shipDate: day * subscriptionData.planId,
+      shipDate: day * planId,
     });
   }
   function toggleSelectedProduct(product) {
@@ -32,7 +32,7 @@ export default function DetailsBox({ boxName, isOpen }) {
       productsId: auxArray,
     });
     setSelectedProducts(auxArray);
-    console.log(subscriptionData.productsId);
+    console.log(subscriptionData?.productsId);
   }
   if (boxName === "Plano") {
     return (
@@ -48,7 +48,8 @@ export default function DetailsBox({ boxName, isOpen }) {
         {daysOptions.map((day, index) => {
           return (
             <StyledOption
-              isSelected={index + 1 === selectedDay /subscriptionData.planId}
+              key={index}
+              isSelected={index + 1 === selectedDay / planId}
             >
               <div onClick={() => selectDay(index + 1)}></div>
               <h3>
