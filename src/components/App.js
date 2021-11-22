@@ -5,6 +5,7 @@ import SignIn from "../pages/sign/SignIn.js";
 import SignUp from "../pages/sign/SignUp.js";
 import Details from "../pages/subscription/Details.js";
 import Plan from "../pages/subscription/Plan.js";
+import Ship from "../pages/subscription/Ship.js";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route exact path="/entrar" element={<SignIn />} />
           <Route exact path="/planos" element={<Plan />} />
           <Route exact path="/detalhes" element={<Details />} />
+          <Route exact path="/entrega" element={<Ship />} />
         </Routes>
       </GlobalProvider>
     </Router>
