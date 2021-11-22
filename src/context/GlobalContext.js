@@ -4,15 +4,15 @@ const GlobalContext = createContext({});
 
 export function GlobalProvider({ children }) {
   const [userData, setUserData] = useState(null);
-  const [subscriptionData, setSubscriptionData] = useState(undefined);
+  const [subscriptionData, setSubscriptionData] = useState();
 
   return (
     <GlobalContext.Provider
       value={{
         userData,
         setUserData,
-		subscriptionData,
-		setSubscriptionData
+        subscriptionData,
+        setSubscriptionData,
       }}
     >
       {children}
