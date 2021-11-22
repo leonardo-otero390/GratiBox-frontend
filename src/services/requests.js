@@ -10,7 +10,7 @@ function createBearerAuthorization(token) {
 const signUp = ({ body }) => axiosBase.post("/sign-up", body);
 const signIn = ({ body }) => axiosBase.post("/sign-in", body);
 const submitSubscription = ({ body, token }) =>
-  axiosBase.post("/sign-in", body, createBearerAuthorization(token));
+  axiosBase.post("/subscription", body, createBearerAuthorization(token));
 const API = { signUp, signIn, submitSubscription };
 
 export default API;

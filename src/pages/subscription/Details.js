@@ -20,7 +20,7 @@ export default function Details() {
     if (!subscriptionData?.planId) navigate("/planos");
   }, [userData, subscriptionData]);
   function selectDetails() {
-    if (!subscriptionData?.productsId?.length || !subscriptionData?.shipDate){
+    if (!subscriptionData?.productsId?.length || !subscriptionData?.shipDateId){
       return alert("Por favor escolha pelo menos um de cada campo");
     }
     navigate("/entrega");

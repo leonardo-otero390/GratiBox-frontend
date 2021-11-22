@@ -23,7 +23,7 @@ export default function Ship() {
   useEffect(() => {
     if (!userData) navigate("/entrar");
     if (!subscriptionData?.planId) navigate("/planos");
-    if (!subscriptionData?.shipDate) navigate("/detalhes");
+    if (!subscriptionData?.shipDateId) navigate("/detalhes");
   }, [userData, subscriptionData]);
   function finishSubscription(event) {
     event.preventDefault();
@@ -33,12 +33,20 @@ export default function Ship() {
       name: fullName,
       ZIPCode,
       address,
-      stateId: state,
+      state,
       city,
       userId: userData.id,
     };
-    console.log(body);
-    API.submitSubscription({body,token})
+    API.submitSubscription({ body, token })
+      .then(()=>{
+        alert("Obrigado, por confiar em nosso trabalho, gratiluz ^^");
+        navigate("/meu-plano");
+      })
+      .catch(() =>
+        alert(
+          "Não foi possível realizar seu cadastro, por favor tente mais tarde."
+        )
+      );
   }
   function setLocation({ city, state }) {
     setCity(city);
@@ -147,13 +155,13 @@ const StyledForm = styled.form`
     padding-left: 8px;
     border: none;
   }
-  .fake-inputs div{
-    display:flex;
+  .fake-inputs div {
+    display: flex;
     align-items: center;
-    width:29%;
+    width: 29%;
   }
-  .fake-inputs div:hover{
-    cursor:not-allowed;
+  .fake-inputs div:hover {
+    cursor: not-allowed;
   }
   input::placeholder {
     color: #4d65a8;
