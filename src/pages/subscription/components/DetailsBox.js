@@ -17,7 +17,7 @@ export default function DetailsBox({ boxName, isOpen }) {
     setSelectedDay(day * planId);
     setSubscriptionData({
       ...subscriptionData,
-      shipDate: day * planId,
+      shipDateId: day * planId,
     });
   }
   function toggleSelectedProduct(product) {
@@ -51,9 +51,7 @@ export default function DetailsBox({ boxName, isOpen }) {
               isSelected={index + 1 === selectedDay / planId}
             >
               <div onClick={() => selectDay(index + 1)}></div>
-              <h3>
-                {day}
-              </h3>
+              <h3>{day}</h3>
             </StyledOption>
           );
         })}
