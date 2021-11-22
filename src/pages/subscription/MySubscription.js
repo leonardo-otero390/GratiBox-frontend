@@ -9,25 +9,17 @@ import {
   StyledMain,
   StyledTitle,
 } from "./style.js";
-import SummaryBox from "./components/SummaryBox";
+import API from "../../services/requests";
 
-export default function Details() {
-  const [selectedBox, setSelectedBox] = useState(null);
+export default function MySubscription() {
   const { userData, subscriptionData } = useContext(GlobalContext);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!userData) navigate("/entrar");
-    if (!subscriptionData?.planId) navigate("/planos");
+    // if (!userData) navigate("/entrar");
   }, [userData, subscriptionData]);
-  function selectDetails() {
-    if (!subscriptionData?.productsId?.length || !subscriptionData?.shipDateId){
-      return alert("Por favor escolha pelo menos um de cada campo");
-    }
-    navigate("/entrega");
-  }
-  function toggleSelectedBox(boxName) {
-    if (boxName === selectedBox) setSelectedBox(null);
-    else setSelectedBox(boxName);
+  function finishSubscription(event) {
+    event.preventDefault();
+    const token = localStorage.getItem("token");
   }
   return (
     <StyledMain>
@@ -37,16 +29,13 @@ export default function Details() {
       </StyledDescription>
       <StyledCard>
         <img src={womanInMat} alt="woman meditating in mat" />
-        {["Plano", "Entrega", "Quero receber"].map((boxName, index) => (
-          <SummaryBox
-            key={index}
-            selectedBox={selectedBox}
-            toggleSelectedBox={toggleSelectedBox}
-            boxName={boxName}
-          />
-        ))}
+        <StyledPlanInfo>
+          Plano:<span>@tipo_de_plano</span>
+        </StyledPlanInfo>
+        <StyledPlanInfo>
+          Data de assinatura:<span>@tipo_de_plano</span>
+        </StyledPlanInfo>
       </StyledCard>
-      <StyledButton onClick={selectDetails}>Próximo</StyledButton>
     </StyledMain>
   );
 }
@@ -75,5 +64,17 @@ const StyledCard = styled.article`
     height: 172px;
     object-fit: cover;
     margin-bottom: 32px;
+  }
+`;
+const StyledPlanInfo = styled.h3`
+  width: 100%;
+  padding-left:16px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
+  color: #4d65a8;
+  span {
+    color: #e63c80;
   }
 `;

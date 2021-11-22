@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import womanInGarden from "../../assets/woman-in-garden.jpg";
-import womanInRoom from "../../assets/woman-in-room.jpg";
-import GlobalContext from "../../context/GlobalContext";
+import womanInGarden from "../../../assets/woman-in-garden.jpg";
+import womanInRoom from "../../../assets/woman-in-room.jpg";
+import GlobalContext from "../../../context/GlobalContext.js";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import {
@@ -9,13 +9,13 @@ import {
     StyledDescription,
     StyledMain,
     StyledTitle,
-} from "./style.js";
+} from "../style.js";
 
 export default function Plan() {
   const { userData, setSubscriptionData} = useContext(GlobalContext);
   const navigate = useNavigate();
   useEffect(() => {
-    //if (!userData) navigate("/entrar");
+   if (!userData) navigate("/entrar");
   }, [userData]);
   function selectPlan(planId) {
     setSubscriptionData({ planId });

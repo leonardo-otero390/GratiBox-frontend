@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import womanInMat from "../../assets/woman-in-mat.jpg";
-import GlobalContext from "../../context/GlobalContext";
+import womanInMat from "../../../assets/woman-in-mat.jpg";
+import GlobalContext from "../../../context/GlobalContext";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import {
@@ -8,8 +8,8 @@ import {
   StyledDescription,
   StyledMain,
   StyledTitle,
-} from "./style.js";
-import API from "../../services/requests";
+} from "../style.js";
+import API from "../../../services/requests";
 import cep from "cep-promise";
 
 export default function Ship() {

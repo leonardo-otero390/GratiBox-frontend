@@ -3,9 +3,10 @@ import { GlobalProvider } from "../context/GlobalContext.js";
 import Home from "../pages/home/Home.js";
 import SignIn from "../pages/sign/SignIn.js";
 import SignUp from "../pages/sign/SignUp.js";
-import Details from "../pages/subscription/Details.js";
-import Plan from "../pages/subscription/Plan.js";
-import Ship from "../pages/subscription/Ship.js";
+import Details from "../pages/subscription/newSubs/Details.js";
+import MySubscription from "../pages/subscription/MySubscription.js";
+import Plan from "../pages/subscription/newSubs/Plan.js";
+import Ship from "../pages/subscription/newSubs/Ship.js";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route exact path="/planos" element={<Plan />} />
           <Route exact path="/detalhes" element={<Details />} />
           <Route exact path="/entrega" element={<Ship />} />
+          <Route exact path="/meu-plano" element={<MySubscription />} />
         </Routes>
       </GlobalProvider>
     </Router>
