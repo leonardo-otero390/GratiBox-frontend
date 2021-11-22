@@ -32,7 +32,6 @@ export default function DetailsBox({ boxName, isOpen }) {
       productsId: auxArray,
     });
     setSelectedProducts(auxArray);
-    console.log(subscriptionData?.productsId);
   }
   if (boxName === "Plano") {
     return (
@@ -67,7 +66,10 @@ export default function DetailsBox({ boxName, isOpen }) {
       <StyledDetails isOpen={isOpen}>
         {productsOptions.map((product, index) => {
           return (
-            <StyledOption isSelected={selectedProducts.includes(index + 1)}>
+            <StyledOption
+              key={index}
+              isSelected={selectedProducts.includes(index + 1)}
+            >
               <div onClick={() => toggleSelectedProduct(index + 1)}></div>
               <h3>
                 {product}

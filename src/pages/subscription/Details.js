@@ -20,6 +20,9 @@ export default function Details() {
     if (!subscriptionData?.planId) navigate("/planos");
   }, [userData, subscriptionData]);
   function selectDetails() {
+    if (!subscriptionData?.productsId?.length || !subscriptionData?.shipDate){
+      return alert("Por favor escolha pelo menos um de cada campo");
+    }
     navigate("/entrega");
   }
   function toggleSelectedBox(boxName) {
@@ -43,7 +46,7 @@ export default function Details() {
           />
         ))}
       </StyledCard>
-      <StyledButton onClick={() => selectDetails}>Próximo</StyledButton>
+      <StyledButton onClick={selectDetails}>Próximo</StyledButton>
     </StyledMain>
   );
 }
