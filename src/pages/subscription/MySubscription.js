@@ -3,24 +3,18 @@ import womanInMat from "../../assets/woman-in-mat.jpg";
 import GlobalContext from "../../context/GlobalContext";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import {
-  StyledButton,
-  StyledDescription,
-  StyledMain,
-  StyledTitle,
-} from "./style.js";
+import { StyledDescription, StyledMain, StyledTitle } from "./style.js";
 import API from "../../services/requests";
 
 export default function MySubscription() {
-  const { userData, subscriptionData } = useContext(GlobalContext);
+  const { userData } = useContext(GlobalContext);
+  const [subscriptionData, setSubscriptionData] = useState(undefined);
   const navigate = useNavigate();
   useEffect(() => {
-    // if (!userData) navigate("/entrar");
-  }, [userData, subscriptionData]);
-  function finishSubscription(event) {
-    event.preventDefault();
+    if (!userData) navigate("/entrar");
     const token = localStorage.getItem("token");
-  }
+    API.getSubscription({ token }).then((res) => setSubscriptionData(res.data));
+  }, [userData]);
   return (
     <StyledMain>
       <StyledTitle>Bom te ver por aqui, {userData?.name}</StyledTitle>
@@ -30,11 +24,12 @@ export default function MySubscription() {
       <StyledCard>
         <img src={womanInMat} alt="woman meditating in mat" />
         <StyledPlanInfo>
-          Plano:<span>@tipo_de_plano</span>
+          Plano:<span> {subscriptionData.plan}</span>
         </StyledPlanInfo>
         <StyledPlanInfo>
-          Data de assinatura:<span>@tipo_de_plano</span>
+          Data de assinatura:<span> {subscriptionData.sign_date}</span>
         </StyledPlanInfo>
+        {subscriptionData.products.map(product => <StyledPlanInfo>{product}</StyledPlanInfo>)}
       </StyledCard>
     </StyledMain>
   );
@@ -68,7 +63,7 @@ const StyledCard = styled.article`
 `;
 const StyledPlanInfo = styled.h3`
   width: 100%;
-  padding-left:16px;
+  padding-left: 16px;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
   font-size: 18px;

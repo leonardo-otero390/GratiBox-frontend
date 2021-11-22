@@ -23,12 +23,15 @@ export default function SignIn() {
     const body = { email, password };
     API.signIn({ body })
       .then((res) => {
-        navigate("/planos");
-        localStorage.setItem('token', res.data.token);
+        localStorage.setItem("token", res.data.token);
         setUserData(res.data.user);
+        API.getSubscription({ token: res.data.token })
+        .then(() =>navigate("/meu-plano"))
+        .catch(() =>navigate("/planos"));
       })
       .catch((err) => {
-        if (err.response?.status === 401) return alert("Campo email/senha inválido");
+        if (err.response?.status === 401)
+          return alert("Campo email/senha inválido");
         return alert("Não foi possível entrar");
       });
   }
