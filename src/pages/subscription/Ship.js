@@ -10,6 +10,7 @@ import {
   StyledTitle,
 } from "./style.js";
 import API from "../../services/requests";
+import cep from "cep-promise";
 
 export default function Ship() {
   const [fullName, setFullName] = useState("");
@@ -27,9 +28,29 @@ export default function Ship() {
   function finishSubscription(event) {
     event.preventDefault();
     const token = localStorage.getItem("token");
-    const body = {...subscriptionData,name:fullName,ZIPCode,address,stateId:state,city,userId:userData.id}
+    const body = {
+      ...subscriptionData,
+      name: fullName,
+      ZIPCode,
+      address,
+      stateId: state,
+      city,
+      userId: userData.id,
+    };
     console.log(body);
-    //API.submitSubscription({body,token})
+    API.submitSubscription({body,token})
+  }
+  function setLocation({ city, state }) {
+    setCity(city);
+    setState(state);
+  }
+  function searchCEP(event) {
+    setZIPCode(event.target.value);
+    if (event.target.value.length === 8) {
+      cep(event.target.value)
+        .then((res) => setLocation(res, true))
+        .catch(() => setLocation({ city: "", state: "" }));
+    }
   }
   return (
     <StyledMain>
@@ -43,35 +64,28 @@ export default function Ship() {
           <input
             type="text"
             placeholder="Nome completo"
+            value={fullName}
             onChange={(event) => setFullName(event.target.value)}
             required
           />
           <input
             type="text"
             placeholder="Enderesso de entrega"
+            value={address}
             onChange={(event) => setAddress(event.target.value)}
             required
           />
           <input
             type="number"
             placeholder="CEP"
-            onChange={(event) => setZIPCode(event.target.value)}
+            onChange={searchCEP}
             required
           />
-          <div>
-            <input
-              className="city-input"
-              type="text"
-              placeholder="Cidade"
-              onChange={(event) => setCity(event.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Estado"
-              onChange={(event) => setState(event.target.value)}
-              required
-            />
+          <div className="fake-inputs">
+            <div className="city-input" value={city}>
+              {city ? city : "Cidade"}
+            </div>
+            <div>{state ? state : "Estado"}</div>
           </div>
         </StyledForm>
       </StyledCard>
@@ -113,17 +127,15 @@ const StyledForm = styled.form`
   flex-direction: column;
   gap: 8px;
   width: 290px;
-  div {
+  .fake-inputs {
     display: flex;
     gap: 8px;
   }
-  div input {
-    width: 29%;
-  }
-  .city-input {
+  .fake-inputs .city-input {
     width: 69%;
   }
-  input {
+  input,
+  .fake-inputs div {
     height: 44px;
     background: rgba(224, 209, 237, 0.62);
     border-radius: 5px;
@@ -134,6 +146,14 @@ const StyledForm = styled.form`
     color: #4d65a8;
     padding-left: 8px;
     border: none;
+  }
+  .fake-inputs div{
+    display:flex;
+    align-items: center;
+    width:29%;
+  }
+  .fake-inputs div:hover{
+    cursor:not-allowed;
   }
   input::placeholder {
     color: #4d65a8;

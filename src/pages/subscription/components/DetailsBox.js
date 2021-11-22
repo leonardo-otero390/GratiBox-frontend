@@ -53,7 +53,6 @@ export default function DetailsBox({ boxName, isOpen }) {
               <div onClick={() => selectDay(index + 1)}></div>
               <h3>
                 {day}
-                {}
               </h3>
             </StyledOption>
           );
